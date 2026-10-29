@@ -1,0 +1,5 @@
+# Lacuna L-10: a lista de atividades e subatividades do formulário oficial não é pública
+# (na jornada só aparece um rótulo truncado). Preencher apenas com rótulos reais do formulário.
+versao: "2026-10-28.1"
+mapa: []   # exemplo de item: { cnae: "1091-1/02", atividade: "<rótulo do formulário>", subatividade: "<rótulo>" }
+# Sem item correspondente: quote_prefill.atividade = null e o caso segue pelo CNAE.

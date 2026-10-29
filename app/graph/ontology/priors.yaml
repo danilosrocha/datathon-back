@@ -1,0 +1,5 @@
+# Contagens iniciais α/β de atividade → característica (seed; recalculado das bases do desafio).
+# atividade aceita qualquer nível CNAE: subclasse 1091-1/02, classe 1091-1, grupo 109, divisão 10.
+- { atividade: "CNAE:1091-1/02", caracteristica: mercadoria_refrigerada, alpha: 8, beta: 2 }
+- { atividade: "CNAE:1091-1/02", caracteristica: maquinas_equipamentos, alpha: 9, beta: 1 }
+- { atividade: "CNAE:10", caracteristica: possui_estoque, alpha: 6, beta: 4 }

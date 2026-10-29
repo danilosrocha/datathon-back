@@ -1,0 +1,20 @@
+# Riscos e as dimensões de proteção que afetam (ARQUITETURA §4.1).
+# As dimensões são as mesmas de `dimensao` em catalog/coberturas.yaml.
+- id: incendio
+  label: "Incêndio"
+  afeta: [imovel, conteudo]
+- id: dano_eletrico
+  label: "Dano elétrico"
+  afeta: [conteudo]
+- id: deterioracao_mercadoria
+  label: "Deterioração de mercadoria"
+  afeta: [conteudo]
+- id: roubo
+  label: "Roubo"
+  afeta: [conteudo]
+- id: ataque_cibernetico
+  label: "Ataque cibernético e vazamento de dados"
+  afeta: [cyber]
+- id: dano_a_terceiros
+  label: "Dano a clientes e terceiros"
+  afeta: [danos_a_terceiros]

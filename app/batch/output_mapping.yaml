@@ -1,0 +1,55 @@
+# Decision → templates oficiais. A ordem e os nomes das colunas vêm do cabeçalho do CSV da
+# organização (lido em tempo de execução); aqui só o que preenche cada coluna.
+
+encoding: utf-8-sig        # igual aos arquivos fornecidos
+separador_lista: " | "
+
+# Códigos internos → códigos do catalogo_coberturas_fixas_planos.csv (L-10). PROTECAO_CIBERNETICA
+# não consta no CSV: código provisório, exigido pelo Guia §10.2.
+codigos_cobertura:
+  RC_ESTABELECIMENTO: RESPONSABILIDADE_CIVIL_ESTABELECIMENTO
+  ROUBO_FURTO_BENS: ROUBO_FURTO_ARROMBAMENTO
+  VENDAVAL_GRANIZO: VENDAVAL_EVENTOS_CORRELATOS
+  RC_EMPREGADOR: RESPONSABILIDADE_CIVIL_EMPREGADOR
+  QUEBRA_VIDROS: QUEBRA_DE_VIDROS
+
+observacoes_cobertura:
+  PROTECAO_CIBERNETICA: "Código provisório (L-10): ausente no catálogo CSV, exigido pelo Guia §10.2; limites a confirmar com a organização."
+
+elegivel:
+  elegivel: "SIM"
+  pendente: "SIM_SUJEITO_A_CONFIRMACAO"   # L-05: impedimentos sem campo na base
+  inelegivel: "NAO"
+
+# Fontes públicas por origem do fato (coluna fontes_publicas_adicionais).
+fontes:
+  api_desastres: "Atlas Digital de Desastres no Brasil — MIDR/S2iD (município, 2003–2016)"
+  api_seguranca: "Dados de criminalidade por UF — roubos por 100 mil hab. (UF, 2018–2023)"
+data_acesso: "28/10/2026"
+
+colunas_resultado:
+  empresa_id: empresa_id
+  imovel_id: imovel_id
+  elegivel: elegivel
+  motivo_inelegibilidade: motivo_inelegibilidade
+  tipo_localizacao_sugerido: tipo_localizacao_sugerido
+  relacao_imovel_sugerida: relacao_imovel_sugerida
+  plano_recomendado: plano_recomendado
+  coberturas_recomendadas: coberturas_recomendadas
+  confianca_geral: confianca_geral
+  justificativa_recomendacao: justificativa_recomendacao
+  perguntas_confirmacao: perguntas_confirmacao
+  fontes_publicas_adicionais: fontes_publicas_adicionais
+
+colunas_coberturas:
+  empresa_id: empresa_id
+  imovel_id: imovel_id
+  cobertura: cobertura
+  faixa_valor_min: faixa_valor_min
+  faixa_valor_max: faixa_valor_max
+  confianca_estimativa: confianca_estimativa
+  dados_utilizados: dados_utilizados
+  regra_calculo_utilizada: regra_calculo_utilizada
+  justificativa: justificativa
+  informacao_a_confirmar: informacao_a_confirmar
+  observacao: observacao

@@ -1,0 +1,11 @@
+.venv
+.git
+.env
+.env.*
+__pycache__
+.pytest_cache
+.ruff_cache
+tests
+out
+CLAUDE.md
+.DS_Store

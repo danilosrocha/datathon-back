@@ -1,0 +1,109 @@
+# Chaves de fatos (CONTRATOS_API §5). Mudou aqui → mude no contrato.
+# type: boolean · select · multiselect · number · text · cnpj · cep · list · object
+#       money_range e level são atalhos de select com as opções abaixo.
+# extractable: o Extrator pode tirar do texto do usuário (false = só base, fórmula ou API).
+# eligibility: usada por regra de elegibilidade.
+# never_estimated: guardrail — nunca pode ter status `estimado`.
+# TODO: opções de area_faixa, num_empregados_faixa, circulacao/quantidade_clientes_faixa (base comum).
+
+identificacao:
+  id_empresa: { label: "ID da empresa", type: text, extractable: false }
+  id_estabelecimento: { label: "ID do estabelecimento", type: text, extractable: false }
+  cnpj_cpf: { label: "CNPJ ou CPF", type: cnpj }
+  razao_social: { label: "Razão social", type: text }
+  cnae_principal: { label: "CNAE principal", type: text, pattern: '^\d{4}-\d/\d{2}$' }
+  cnaes_secundarios: { label: "CNAEs secundários", type: list }
+  atividade_efetiva: { label: "Atividade efetiva", type: text, eligibility: true }
+  porte: { label: "Porte", type: text }
+  data_abertura: { label: "Data de abertura", type: text }
+  situacao_cadastral: { label: "Situação cadastral", type: text }
+  faturamento_faixa: { label: "Faturamento anual", type: money_range }
+  num_empregados_faixa: { label: "Número de empregados", type: text }
+  atividade_rural: { label: "Atividade rural", type: boolean, eligibility: true }
+  atividade_aceita: { label: "Atividade aceita pelo produto", type: boolean, eligibility: true, extractable: false }
+  tipo_pessoa: { label: "Tipo de pessoa", type: select, options: [pf, pj] }
+  atividade_formulario: { label: "Atividade no formulário", type: text, extractable: false }
+  subatividade_formulario: { label: "Subatividade no formulário", type: text, extractable: false }
+
+local:
+  municipio_ibge: { label: "Município (IBGE)", type: text, pattern: '^\d{7}$', extractable: false }
+  uf: { label: "UF", type: text, pattern: '^[A-Z]{2}$' }
+  cep: { label: "CEP", type: cep }
+  geo: { label: "Coordenadas", type: object, extractable: false }
+  tipo_estabelecimento:
+    label: "Tipo de estabelecimento"
+    type: select
+    options: [loja, escritorio, galpao_industria, home_office, loja_shopping, outro]
+  relacao_imovel: { label: "Relação com o imóvel", type: select, options: [proprietario, inquilino] }
+  objeto_seguro: { label: "Objeto do seguro", type: select, options: [ambos, predio, conteudo] }
+  area_faixa: { label: "Área", type: text }
+  em_shopping: { label: "Fica em shopping", type: boolean }
+  em_shopping_protegido: { label: "Shopping com proteção própria", type: boolean }
+  fachada_vidros: { label: "Fachada de vidro", type: boolean }
+
+impedimentos:
+  localizacao_restrita: { label: "Localização restrita", type: boolean, eligibility: true, never_estimated: true }
+  imovel_tombado_desapropriado_condenado: { label: "Imóvel tombado, desapropriado ou condenado", type: boolean, eligibility: true }
+  imovel_em_obra: { label: "Imóvel em obra", type: boolean, eligibility: true }
+  parede_externa_combustivel: { label: "Parede externa de material combustível", type: boolean, eligibility: true }
+  objeto_ja_segurado_bb: { label: "Já segurado na BB Seguros", type: boolean, eligibility: true }
+
+operacao:
+  atendimento_presencial: { label: "Atendimento presencial", type: boolean }
+  delivery: { label: "Delivery", type: boolean }
+  home_office: { label: "Home office", type: boolean }
+  vende_online: { label: "Vende online", type: boolean }
+  circulacao_clientes_dia_faixa: { label: "Circulação de clientes por dia", type: text }
+  quantidade_clientes_faixa: { label: "Quantidade de clientes", type: text }
+
+ativos:
+  possui_estoque: { label: "Possui estoque", type: boolean }
+  mercadoria_refrigerada: { label: "Mercadoria refrigerada", type: boolean }
+  maquinas_equipamentos: { label: "Máquinas e equipamentos", type: boolean }
+  eletronicos_relevantes: { label: "Eletrônicos relevantes", type: boolean }
+  guarda_valores_no_local: { label: "Guarda valores no local", type: boolean }
+  letreiro_luminoso: { label: "Letreiro luminoso", type: boolean }
+  bens_ao_ar_livre: { label: "Bens ao ar livre", type: boolean }
+  valor_predio_faixa: { label: "Valor do prédio", type: money_range }
+  valor_conteudo_faixa: { label: "Valor do conteúdo", type: money_range }
+  valor_estoque_faixa: { label: "Valor do estoque", type: money_range }
+  valor_equipamentos_faixa: { label: "Valor dos equipamentos", type: money_range }
+
+continuidade:
+  despesas_fixas_mensais_faixa: { label: "Despesas fixas mensais", type: money_range }
+  aluguel_mensal_faixa: { label: "Aluguel mensal", type: money_range }
+  dias_tolerancia_sem_operar: { label: "Dias que aguenta sem operar", type: number, min: 0 }
+  depende_equipamento_critico: { label: "Depende de equipamento crítico", type: boolean }
+
+seguranca:
+  seguranca_local:
+    label: "Segurança do local"
+    type: multiselect
+    options: [alarme, cameras, vigilancia, grades, nenhuma]
+
+digital:
+  armazena_dados_clientes: { label: "Armazena dados de clientes", type: boolean }
+  recebe_pagamentos_online: { label: "Recebe pagamentos online", type: boolean }
+  sistema_critico_online: { label: "Sistema crítico online", type: boolean }
+  exposicao_digital_nivel: { label: "Exposição digital", type: level, extractable: false }
+  controles_digitais:
+    label: "Controles digitais"
+    type: multiselect
+    options: [backup, antivirus, mfa, nenhum]
+
+riscos_regiao:
+  risco_vendaval_regiao: { label: "Risco de vendaval na região", type: level, extractable: false }
+  risco_granizo_regiao: { label: "Risco de granizo na região", type: level, extractable: false }
+  risco_alagamento_regiao: { label: "Risco de alagamento na região", type: level, extractable: false }
+  risco_raio_regiao: { label: "Risco de raio na região", type: level, extractable: false }
+  risco_roubo_regiao: { label: "Risco de roubo na região", type: level, extractable: false }
+
+derivados:
+  is_basica_estimada: { label: "IS básica estimada", type: number, min: 0, extractable: false }
+
+contratacao:
+  vigencia_anos: { label: "Vigência (anos)", type: number, min: 1, max: 5 }
+  beneficio_premium:
+    label: "Benefício premium"
+    type: select
+    options: [detector_fumaca, camera_wifi, plataforma_minu_biz]

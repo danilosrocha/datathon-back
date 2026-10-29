@@ -1,0 +1,11 @@
+# Operadores: igual, diferente, em, fora_de, maior_que, menor_que, existe; combinadores todos, algum, nenhum.
+# Três valores: fato ausente ou `estimado` → DESCONHECIDO (nunca False).
+regras:
+  - { id: ELG-001, tipo: impedimento, descricao: "Atividade rural", quando: { fato: atividade_rural, igual: true } }
+  - { id: ELG-002, tipo: impedimento, descricao: "Imóvel em comunidade carente, favela ou área rural", quando: { fato: localizacao_restrita, igual: true } }
+  - { id: ELG-003, tipo: impedimento, descricao: "Imóvel tombado, desapropriado ou condenado por órgão público", quando: { fato: imovel_tombado_desapropriado_condenado, igual: true } }
+  - { id: ELG-004, tipo: impedimento, descricao: "Imóvel em construção, reforma ou reconstrução", quando: { fato: imovel_em_obra, igual: true } }
+  - { id: ELG-005, tipo: impedimento, descricao: "Construção com parede externa em material combustível", quando: { fato: parede_externa_combustivel, igual: true } }
+  - { id: ELG-006, tipo: impedimento, descricao: "Objeto já segurado por outra proposta de seguro empresarial da BB Seguros", quando: { fato: objeto_ja_segurado_bb, igual: true } }
+  - { id: ELG-007, tipo: impedimento, descricao: "Atividade não aceita pelo produto", quando: { fato: atividade_aceita, igual: false } }
+  - { id: ELG-008, tipo: redirecionamento, descricao: "Cobertura básica acima de R$ 7,5 milhões", quando: { fato: is_basica_estimada, maior_que: 7500000 }, destino: "Seguro Personalizado Empresarial" }

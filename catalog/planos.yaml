@@ -1,0 +1,25 @@
+fixas: &fixas [INCENDIO_RAIO_EXPLOSAO_FUMACA, DANOS_ELETRICOS, PERDA_PAGAMENTO_ALUGUEL, RC_ESTABELECIMENTO, DESPESAS_FIXAS, PROTECAO_CIBERNETICA]
+planos:
+  - codigo: ESSENCIAL
+    fixas: *fixas
+    padrao: []
+    permite_especificas: false
+    assistencias: ["Empresa em Apuros", "Proteção Digital"]
+  - codigo: PRATICO
+    fixas: *fixas
+    padrao: [ROUBO_FURTO_BENS, VENDAVAL_GRANIZO]
+    permite_especificas: true
+    assistencias: ["Empresa em Apuros", "Proteção Digital", "Empresa Funcionando", "Empresa Arrumada", "Empresa Limpa"]
+  - codigo: TOTAL
+    fixas: *fixas
+    padrao: [ROUBO_FURTO_BENS, VENDAVAL_GRANIZO, QUEBRA_VIDROS, RC_EMPREGADOR]
+    permite_especificas: true
+    assistencias: ["Empresa em Apuros", "Proteção Digital", "Empresa Funcionando", "Empresa Arrumada", "Empresa Limpa", "Empresa Segura", "Empresa sem Pragas", "Benefício Premium"]
+    beneficio_premium: { escolha_uma: [detector_fumaca, camera_wifi, plataforma_minu_biz] }
+opcionais_qualquer_plano: true
+vigencia_anos: { min: 1, max: 5, padrao: 1 }
+# Lacuna L-13: a tela atual exibe "Empresarial Cyber Total" (pacote digital do Total) e "Empresa Sem Praga".
+# Premissa: usar os nomes do Guia; os da tela ficam como alias de exibição.
+alias_exibicao: { "Proteção Digital@TOTAL": "Empresarial Cyber Total" }
+# Lacuna L-01: o Guia não diz se uma cobertura "padrão" pode ser ADICIONADA ao Essencial.
+# Premissa: não — se precisar dela, o motor sobe para o Prático.

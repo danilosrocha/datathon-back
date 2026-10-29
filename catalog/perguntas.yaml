@@ -1,0 +1,110 @@
+# Textos das perguntas por chave de fato (o motor escolhe a pergunta; o LLM só redige).
+# texto: pergunta aberta · confirmacao: quando p ≥ 0,8 · motivo: por que perguntamos.
+# Sem entrada aqui → texto genérico a partir do rótulo do fato.
+
+rotulos_opcoes:
+  ate_10k: "Até R$ 10 mil"
+  10k_50k: "R$ 10 a 50 mil"
+  50k_200k: "R$ 50 a 200 mil"
+  200k_1m: "R$ 200 mil a 1 milhão"
+  1m_7_5m: "R$ 1 a 7,5 milhões"
+  acima_7_5m: "Acima de R$ 7,5 milhões"
+  pf: "Pessoa física"
+  pj: "Pessoa jurídica (inclui MEI)"
+  proprietario: "Proprietário"
+  inquilino: "Inquilino"
+  ambos: "Imóvel e conteúdo"
+  predio: "Somente o imóvel"
+  conteudo: "Somente o conteúdo"
+  loja: "Loja de rua"
+  escritorio: "Escritório"
+  galpao_industria: "Galpão ou indústria"
+  home_office: "Home office"
+  loja_shopping: "Loja em shopping"
+  outro: "Outro"
+
+perguntas:
+  cnae_principal:
+    texto: "Qual é a atividade do seu negócio? Se souber, me passe o CNAE principal."
+    motivo: "A atividade define os riscos típicos e as coberturas que fazem sentido."
+  atividade_rural:
+    texto: "O negócio tem atividade rural, como plantio ou criação de animais?"
+    motivo: "Atividade rural não é aceita neste seguro."
+  localizacao_restrita:
+    texto: "O imóvel fica em comunidade, favela ou área rural?"
+    motivo: "Imóveis nessas áreas não são aceitos neste seguro."
+  imovel_tombado_desapropriado_condenado:
+    texto: "O imóvel é tombado, está desapropriado ou foi condenado por algum órgão público?"
+    motivo: "Imóveis nessa situação não são aceitos neste seguro."
+  imovel_em_obra:
+    texto: "O imóvel está em construção, reforma ou reconstrução?"
+    motivo: "Imóvel em obra não é aceito neste seguro."
+  parede_externa_combustivel:
+    texto: "Alguma parede externa é de madeira ou outro material que pega fogo fácil?"
+    motivo: "Construções com parede externa combustível não são aceitas."
+  objeto_ja_segurado_bb:
+    texto: "Esse imóvel ou conteúdo já tem outro seguro empresarial na BB Seguros?"
+    motivo: "O mesmo bem não pode ter duas apólices empresariais na BB Seguros."
+  objeto_seguro:
+    texto: "O que você quer proteger: o imóvel, o que tem dentro dele, ou os dois?"
+    motivo: "Define a cobertura básica de incêndio."
+  relacao_imovel:
+    texto: "O imóvel é seu ou alugado?"
+    motivo: "Muda o que faz sentido proteger e a cobertura de aluguel."
+  valor_predio_faixa:
+    texto: "Quanto vale o imóvel, mais ou menos?"
+    motivo: "Usamos para dimensionar a cobertura básica."
+  valor_conteudo_faixa:
+    texto: "Quanto valem, juntos, móveis, máquinas e mercadorias do local?"
+    motivo: "Usamos para dimensionar a cobertura básica e a de roubo."
+  valor_estoque_faixa:
+    texto: "Quanto vale o estoque que costuma ficar no local?"
+    motivo: "Ajuda a dimensionar roubo e deterioração de mercadorias."
+  valor_equipamentos_faixa:
+    texto: "Quanto valem os equipamentos e máquinas?"
+    motivo: "Ajuda a dimensionar danos elétricos."
+  aluguel_mensal_faixa:
+    texto: "Qual é o valor do aluguel mensal?"
+    motivo: "Dimensiona a cobertura de perda ou pagamento de aluguel."
+  despesas_fixas_mensais_faixa:
+    texto: "Quanto o negócio gasta por mês com aluguel, salários e contas, mesmo fechado?"
+    motivo: "Dimensiona a cobertura de despesas fixas."
+  faturamento_faixa:
+    texto: "Qual é, mais ou menos, o faturamento anual do negócio?"
+    motivo: "Ajuda a estimar despesas fixas quando não sabemos o valor exato."
+  possui_estoque:
+    texto: "Vocês mantêm estoque de mercadorias no local?"
+    confirmacao: "Imagino que vocês trabalhem com estoque no local, certo?"
+    motivo: "Estoque fica exposto a roubo e incêndio."
+  mercadoria_refrigerada:
+    texto: "Vocês guardam mercadorias em geladeira, freezer ou câmara fria?"
+    confirmacao: "Imagino que vocês usem freezer ou câmara fria, certo?"
+    motivo: "Uma falta de energia pode estragar a mercadoria refrigerada."
+  maquinas_equipamentos:
+    texto: "O negócio depende de máquinas ou equipamentos, como fornos ou máquinas de produção?"
+    confirmacao: "Imagino que vocês usem máquinas no dia a dia, como forno, certo?"
+    motivo: "Máquinas ficam expostas a danos elétricos e incêndio."
+  delivery:
+    texto: "Vocês fazem entregas (delivery)?"
+    motivo: "Entregas podem precisar de uma cobertura específica."
+  home_office:
+    texto: "Alguém trabalha em home office com equipamentos da empresa?"
+    motivo: "Equipamentos em casa podem precisar de uma cobertura específica."
+  guarda_valores_no_local:
+    texto: "Costuma ficar dinheiro em caixa ou cofre no local?"
+    motivo: "Valores guardados podem precisar de cobertura de roubo de valores."
+  fachada_vidros:
+    texto: "A fachada ou vitrine é de vidro?"
+    motivo: "Vitrines tornam relevante a cobertura de quebra de vidros."
+  num_empregados_faixa:
+    texto: "Quantas pessoas trabalham no negócio, contando você?"
+    motivo: "Com equipe maior, a responsabilidade civil do empregador passa a ser relevante."
+  atendimento_presencial:
+    texto: "Vocês atendem clientes no local?"
+    motivo: "Circulação de público aumenta a responsabilidade civil."
+  armazena_dados_clientes:
+    texto: "Vocês guardam dados de clientes, como cadastro ou CPF?"
+    motivo: "Dimensiona a proteção cibernética."
+  recebe_pagamentos_online:
+    texto: "Vocês recebem pagamentos online ou por link?"
+    motivo: "Dimensiona a proteção cibernética."

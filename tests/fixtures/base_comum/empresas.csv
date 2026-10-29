@@ -1,0 +1,6 @@
+﻿empresa_id,cliente_id,grupo_atividade,cnae_principal,descricao_cnae,porte,faturamento_mensal,origem_faturamento,confianca_faturamento,quantidade_funcionarios_estimada,dependencia_digital_pct,percentual_vendas_online_estimado,percentual_receita_delivery_est,indice_maturidade_digital
+EMP_00001,CLI_EMP_00001,FARMACIA,4771-7/01,Comercio varejista de produtos farmaceuticos sem manipulacao,PEQUENA,388500,INFORMADO,ALTA,11,20,0.0,0.0,20
+EMP_00002,CLI_EMP_00002,MERCADO,4729-6/99,Comercio varejista de produtos alimenticios em geral,PEQUENA,986150,PRESUMIDO_COM_BASE_EM_GASTOS,ALTA,26,72,0.642,0.062,72
+EMP_00003,CLI_EMP_00003,FARMACIA,4771-7/01,Comercio varejista de produtos farmaceuticos sem manipulacao,PEQUENA,1034900,PRESUMIDO_COM_BASE_EM_GASTOS,MEDIA,36,61,0.268,0.0,61
+EMP_00004,CLI_EMP_00004,FARMACIA,4771-7/01,Comercio varejista de produtos farmaceuticos sem manipulacao,MICRO,177600,INFORMADO,ALTA,6,53,0.244,0.059,53
+EMP_00009,CLI_EMP_00009,VAREJO_MODA,4782-2/02,Comercio varejista de artigos de viagem,MICRO,36000,INFORMADO,MEDIA,2,28,0.369,0.0,28

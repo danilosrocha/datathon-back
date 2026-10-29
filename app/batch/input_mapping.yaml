@@ -1,0 +1,42 @@
+# Base comum → fatos do caso (unidade: empresa + estabelecimento).
+# Natureza preservada (dicionario_dados.csv): CADASTRAL_OU_OBSERVADO → observado;
+# DERIVADO_OU_ESTIMADO → derivado (valores recalculáveis, ex.: estoque, despesa) ou
+# estimado (probabilidades e índices). Transformações da equipe (limiares, faixas) → derivado.
+# CEP e coordenadas da base são fictícios/perturbados: nunca usados. Território só por município.
+
+# Confiança por rótulo da base e padrão por natureza.
+confianca_rotulo: { ALTA: 0.9, MEDIA: 0.6, BAIXA: 0.3 }
+confianca_natureza: { observado: 0.8, derivado: 0.7, estimado: 0.4 }
+
+limiares:
+  # Limiares calibrados na distribuição da base de desenvolvimento (validate_base + treino):
+  # entre o "sim" e o "não" o fato fica ausente (desconhecido), nunca vira "não".
+  delivery_receita_min: 0.15         # percentual_receita_delivery_est (5% marcava 25% dos escritórios)
+  vendas_online_min: 0.6             # percentual_vendas_online_estimado (mediana 0,47 em todas as atividades)
+  vendas_online_max_nao: 0.2
+  recebimentos_digitais_min: 0.5     # percentual_recebimentos_digitais
+  recebimentos_digitais_max_nao: 0.1
+  sistema_critico_dependencia_min: 70  # dependencia_digital_pct
+  sistema_critico_dependencia_max_nao: 30
+  # indice_exposicao_digital (índice recalculável da base → derivado) em tercis da base de
+  # desenvolvimento: ≤ 0,366 baixo · ≤ 0,472 médio · acima alto.
+  exposicao_digital_cortes: [0.366, 0.472]
+  probabilidade_sim: 0.6             # probabilidades da base → hipótese verdadeira
+  probabilidade_nao: 0.2             # → hipótese falsa
+  eletronicos_relevantes_min: 50000  # soma ponderada de eletrônicos e informática
+  estoque_relevante_min: 10000       # estoque médio estimado
+
+# Tipos de bem que contam como equipamento/máquina.
+bens_equipamento: [EQUIPAMENTO_ELETRONICO, EQUIPAMENTO_INFORMATICA, EQUIPAMENTO_REFRIGERACAO, EQUIPAMENTO_MEDICO, EQUIPAMENTO_BELEZA, EQUIPAMENTO_COZINHA, EQUIPAMENTO_OFICINA, MAQUINA]
+bens_maquina: [MAQUINA, EQUIPAMENTO_COZINHA, EQUIPAMENTO_OFICINA, EQUIPAMENTO_MEDICO, EQUIPAMENTO_BELEZA]
+bens_eletronicos: [EQUIPAMENTO_ELETRONICO, EQUIPAMENTO_INFORMATICA]
+
+# Valor do prédio (só proprietário com área por laudo): área × custo de reconstrução por m²
+# conforme padrão construtivo (premissa da equipe, ordem de grandeza do CUB).
+custo_m2: { ECONOMICO: 1800, NORMAL: 2600, SUPERIOR: 3800, NAO_DISPONIVEL: 2600 }
+
+# Atividades sem atendimento ao público no local.
+sem_atendimento_presencial: [ESCRITORIO]
+
+# Número de funcionários → faixa usada por PLN-02 e EST-RCE-01.
+faixas_funcionarios: [[0, 9, "1_9"], [10, 49, "10_49"], [50, 1000000, "50_mais"]]

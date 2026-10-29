@@ -1,0 +1,63 @@
+# Características operacionais e os riscos a que expõem (CONTRATOS_API §9.6).
+# fact_key precisa existir em app/domain/fact_keys.yaml. Pesos: premissas da equipe.
+- id: mercadoria_refrigerada
+  label: "Mercadoria refrigerada"
+  fact_key: mercadoria_refrigerada
+  expoe_a:
+    - { risco: deterioracao_mercadoria, peso: 0.9 }
+    - { risco: dano_eletrico, peso: 0.7 }
+- id: possui_estoque
+  label: "Possui estoque"
+  fact_key: possui_estoque
+  expoe_a:
+    - { risco: roubo, peso: 0.6 }
+    - { risco: incendio, peso: 0.4 }
+- id: maquinas_equipamentos
+  label: "Máquinas e equipamentos"
+  fact_key: maquinas_equipamentos
+  expoe_a:
+    - { risco: incendio, peso: 0.5 }
+    - { risco: dano_eletrico, peso: 0.6 }
+- id: eletronicos_relevantes
+  label: "Eletrônicos relevantes"
+  fact_key: eletronicos_relevantes
+  expoe_a:
+    - { risco: dano_eletrico, peso: 0.8 }
+    - { risco: roubo, peso: 0.5 }
+- id: letreiro_luminoso
+  label: "Letreiro luminoso"
+  fact_key: letreiro_luminoso
+  expoe_a:
+    - { risco: dano_eletrico, peso: 0.3 }
+    - { risco: incendio, peso: 0.3 }
+- id: delivery
+  label: "Delivery"
+  fact_key: delivery
+  expoe_a:
+    - { risco: roubo, peso: 0.3 }
+    - { risco: dano_a_terceiros, peso: 0.4 }
+- id: atendimento_presencial
+  label: "Atendimento presencial"
+  fact_key: atendimento_presencial
+  expoe_a:
+    - { risco: dano_a_terceiros, peso: 0.7 }
+- id: armazena_dados_clientes
+  label: "Armazena dados de clientes"
+  fact_key: armazena_dados_clientes
+  expoe_a:
+    - { risco: ataque_cibernetico, peso: 0.8 }
+- id: recebe_pagamentos_online
+  label: "Recebe pagamentos online"
+  fact_key: recebe_pagamentos_online
+  expoe_a:
+    - { risco: ataque_cibernetico, peso: 0.6 }
+- id: vende_online
+  label: "Vende online"
+  fact_key: vende_online
+  expoe_a:
+    - { risco: ataque_cibernetico, peso: 0.5 }
+- id: sistema_critico_online
+  label: "Sistema crítico online"
+  fact_key: sistema_critico_online
+  expoe_a:
+    - { risco: ataque_cibernetico, peso: 0.7 }

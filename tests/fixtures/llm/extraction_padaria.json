@@ -1,0 +1,8 @@
+{
+  "facts": [
+    {"key": "cnae_principal", "value": "1091-1/02", "evidence": "padaria 1091-1/02"},
+    {"key": "inventado", "value": true, "evidence": "..."},
+    {"key": "delivery", "value": "talvez", "evidence": "..."},
+    {"key": "municipio_ibge", "value": "5300108", "evidence": "..."}
+  ]
+}

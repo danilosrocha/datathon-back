@@ -1,0 +1,18 @@
+# Premissas da equipe — documentar no README.
+selecao_plano:            # plano mínimo; vence o mais alto acionado
+  - id: PLN-01
+    se: { algum: [ { fato: risco_vendaval_regiao, em: [medio, alto] }, { fato: risco_granizo_regiao, em: [medio, alto] },
+                   { fato: possui_estoque, igual: true }, { fato: risco_roubo_regiao, em: [medio, alto] } ] }
+    plano_minimo: PRATICO
+    motivo: "Exposição climática ou bens sujeitos a roubo pedem as coberturas padrão do Prático."
+  - id: PLN-02
+    se: { algum: [ { fato: fachada_vidros, igual: true }, { fato: num_empregados_faixa, em: ["10_49", "50_mais"] } ] }
+    plano_minimo: TOTAL
+    motivo: "Vitrines e equipe maior tornam relevantes quebra de vidros e RC empregador."
+adicionais:
+  - id: REC-004
+    se: { fato: mercadoria_refrigerada, igual: true }
+    risco: deterioracao_mercadoria
+    necessidade: { dimensao: conteudo, prioridade: alta }
+    cobertura: DETERIORACAO_MERCADORIAS_FRIGORIFICADAS
+    texto: "Sua operação depende de refrigeração; uma falha de energia pode estragar o estoque."

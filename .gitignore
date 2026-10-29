@@ -1,0 +1,32 @@
+# Agent context (local only)
+CLAUDE.md
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# LangGraph
+.langgraph_api/
+
+# Outputs
+out/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Base do desafio (dado da organização): não versionar
+data/Seguro_Empresarial_*/

@@ -1,0 +1,36 @@
+versao: "2026-10-28.1"
+fonte: "Guia dos times — Datathon Proteção Inteligente §10.2; prevalecem as condições gerais oficiais"
+coberturas:
+  # FIXAS — obrigatórias em todos os planos; não podem ser excluídas; só a IS é ajustada
+  - { codigo: INCENDIO_RAIO_EXPLOSAO_FUMACA, nome: "Incêndio, queda de raio, explosão e fumaça", grupo: fixa, dimensao: imovel, is_min: 100000, is_max: 7500000 }
+    # is_min: piso do slider na jornada atual de cotação (L-11) — confirmar nas condições gerais
+  - { codigo: DANOS_ELETRICOS, nome: "Danos elétricos", grupo: fixa, dimensao: conteudo }
+  - { codigo: PERDA_PAGAMENTO_ALUGUEL, nome: "Perda ou pagamento de aluguel", grupo: fixa, dimensao: fluxo_de_caixa }
+  - { codigo: RC_ESTABELECIMENTO, nome: "Responsabilidade civil – estabelecimento", grupo: fixa, dimensao: danos_a_terceiros }
+  - { codigo: DESPESAS_FIXAS, nome: "Despesas fixas", grupo: fixa, dimensao: fluxo_de_caixa }
+  # Código provisório: ausente no CSV fornecido, exigido pelo Guia §10.2 (L-10)
+  - { codigo: PROTECAO_CIBERNETICA, nome: "Proteção cibernética", grupo: fixa, dimensao: cyber }
+  # PADRÃO dos planos Prático e Total — podem ser incluídas ou excluídas na customização
+  - { codigo: VENDAVAL_GRANIZO, nome: "Vendaval, furacão, tornado, ciclone e granizo", grupo: padrao_plano, dimensao: riscos_climaticos }
+  - { codigo: ROUBO_FURTO_BENS, nome: "Roubo ou furto de bens mediante arrombamento", grupo: padrao_plano, dimensao: conteudo }
+  - { codigo: QUEBRA_VIDROS, nome: "Quebra de vidros", grupo: padrao_plano, dimensao: imovel }
+  - { codigo: RC_EMPREGADOR, nome: "Responsabilidade civil – empregador", grupo: padrao_plano, dimensao: danos_a_terceiros }
+  # ESPECÍFICAS da atividade — só Prático e Total, quando compatíveis com a atividade
+  - { codigo: HOME_OFFICE, nome: "Home office", grupo: especifica_atividade, dimensao: conteudo, quando: { fato: home_office, igual: true } }
+  - { codigo: DELIVERY, nome: "Delivery", grupo: especifica_atividade, dimensao: conteudo, quando: { fato: delivery, igual: true } }
+  - { codigo: DETERIORACAO_MERCADORIAS_FRIGORIFICADAS, nome: "Deterioração de mercadorias em ambientes frigorificados", grupo: especifica_atividade, dimensao: conteudo, quando: { fato: mercadoria_refrigerada, igual: true } }
+  - { codigo: ROUBO_FURTO_VALORES, nome: "Roubo ou furto de valores mediante arrombamento", grupo: especifica_atividade, dimensao: conteudo, quando: { fato: guarda_valores_no_local, igual: true } }
+  # OPCIONAIS em qualquer plano — conforme atividade e condições de aceitação
+  - { codigo: TUMULTOS_GREVES_LOCAUTES, nome: "Tumultos, greves e locautes", grupo: opcional, dimensao: imovel }
+  - { codigo: RECOMPOSICAO_REGISTROS_DOCUMENTOS, nome: "Recomposição de registros e documentos", grupo: opcional, dimensao: conteudo }
+  - { codigo: IMPACTO_VEICULOS_QUEDA_AERONAVE, nome: "Impacto de veículos terrestres e queda de aeronave", grupo: opcional, dimensao: imovel }
+  - { codigo: LETREIROS_ANUNCIOS_LUMINOSOS, nome: "Letreiros e anúncios luminosos", grupo: opcional, dimensao: imovel, quando: { fato: letreiro_luminoso, igual: true } }
+  - { codigo: DERRAME_AGUA_SPRINKLERS, nome: "Derrame acidental de água (sprinklers)", grupo: opcional, dimensao: conteudo }
+  - { codigo: EQUIPAMENTOS_ELETRONICOS_SEM_ROUBO, nome: "Equipamentos eletrônicos sem cobertura de roubo", grupo: opcional, dimensao: conteudo, quando: { fato: eletronicos_relevantes, igual: true } }
+  - { codigo: BENS_MERCADORIAS_AO_AR_LIVRE, nome: "Riscos diversos – bens e mercadorias ao ar livre", grupo: opcional, dimensao: conteudo, quando: { fato: bens_ao_ar_livre, igual: true } }
+  - { codigo: RC_GARAGISTA, nome: "RC garagista (compreensiva)", grupo: opcional, dimensao: danos_a_terceiros }
+  - { codigo: RC_DANOS_MORAIS, nome: "RC danos morais", grupo: opcional, dimensao: danos_a_terceiros }
+  - { codigo: LUCRO_BRUTO_SIMPLES, nome: "Lucro bruto simples", grupo: opcional, dimensao: fluxo_de_caixa }
+  - { codigo: LUCRO_LIQUIDO_SIMPLES, nome: "Lucro líquido simples", grupo: opcional, dimensao: fluxo_de_caixa }
+  - { codigo: LUCRO_BRUTO_AMPLA, nome: "Lucro bruto ampla", grupo: opcional, dimensao: fluxo_de_caixa }
+  - { codigo: LUCRO_LIQUIDO_AMPLA, nome: "Lucro líquido ampla", grupo: opcional, dimensao: fluxo_de_caixa }

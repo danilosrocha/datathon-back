@@ -1,0 +1,8 @@
+﻿empresa_id,imovel_id,elegivel,motivo_inelegibilidade,tipo_localizacao_sugerido,relacao_imovel_sugerida,plano_recomendado,coberturas_recomendadas,confianca_geral,justificativa_recomendacao,perguntas_confirmacao,fontes_publicas_adicionais
+EMP_00001,IMO_EMP_00001_01,,,,,,,,,,
+EMP_00001,IMO_EMP_00001_02,,,,,,,,,,
+EMP_00002,IMO_EMP_00002_01,,,,,,,,,,
+EMP_00002,IMO_EMP_00002_02,,,,,,,,,,
+EMP_00003,IMO_EMP_00003_01,,,,,,,,,,
+EMP_00004,IMO_EMP_00004_01,,,,,,,,,,
+EMP_00009,IMO_EMP_00009_01,,,,,,,,,,

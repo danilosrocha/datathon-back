@@ -1,0 +1,8 @@
+﻿imovel_id,empresa_id,pagamento_aluguel_recorrente,valor_aluguel_recorrente,folha_pagamento_mensal,energia_media_mensal_6m,pagamentos_software_mensais,despesa_fixa_mensal_estimada,compras_fornecedores_media_mensal,dias_estoque_estimado,estoque_medio_estimado,estoque_pico_estimado,probabilidade_refrigeracao_referencia,probabilidade_delivery_referencia,percentual_recebimentos_digitais,indice_receita_digital,indice_dependencia_tecnologica,probabilidade_tratamento_dados,indice_dependencia_plataformas,indice_impacto_interrupcao_digital,indice_exposicao_digital
+IMO_EMP_00001_01,EMP_00001,NAO,0,51000,37100,250,97000,62950,60,125900,146700,0.564,0.0,0.281,0.141,0.106,0.749,0.236,0.311,0.28
+IMO_EMP_00001_02,EMP_00001,SIM,11550,33000,14600,300,75700,85900,22,63000,90250,0.495,0.086,0.572,0.286,0.082,0.756,0.321,0.423,0.346
+IMO_EMP_00002_01,EMP_00002,SIM,29350,129000,30500,6950,248800,148850,28,138950,203000,0.894,0.205,0.88,0.645,0.387,0.431,0.642,0.643,0.537
+IMO_EMP_00002_02,EMP_00002,NAO,0,89000,10400,8400,156250,207900,45,311850,377800,0.657,0.149,0.788,0.599,0.305,0.492,0.642,0.541,0.503
+IMO_EMP_00003_01,EMP_00003,SIM,63850,127150,39100,6650,329700,484100,22,355000,565450,0.971,0.061,0.522,0.341,0.253,0.694,0.268,0.501,0.398
+IMO_EMP_00004_01,EMP_00004,SIM,12700,40700,15800,1150,79850,53550,60,107100,147950,0.659,0.318,0.374,0.272,0.159,0.58,0.275,0.346,0.313
+IMO_EMP_00009_01,EMP_00009,SIM,37200,7200,10750,50,56950,16200,45,24300,29150,0.274,0.0,0.237,0.229,0.051,0.354,0.369,0.427,0.243

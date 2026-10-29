@@ -1,0 +1,189 @@
+# Regras de cálculo das faixas de importância segurada (CONTRATOS_API §9.5).
+# Premissas da equipe — documentar no README. Valores em reais, inteiros.
+# Prioridade das entradas: confirmado > observado > derivado > estimado; sem entrada → tabela da
+# equipe (`padrao`, natureza estimado). Faixa sempre que defensável; limites finais seguem as
+# condições gerais (L-02).
+#
+# Tipos de cálculo:
+#   basica       soma das faixas do que será protegido (prédio e/ou conteúdo, por objeto_seguro)
+#   proporcional faixa da primeira base disponível × fator × multiplicador [min, max]
+#   tabela       faixa escolhida pelo valor de um fato
+#   contagem     faixa escolhida pelo número de fatos verdadeiros
+#   fontes       lista ordenada de tabelas/contagens; vale a primeira disponível no caso
+
+# Conversão das faixas de entrada (MoneyRange) em reais.
+faixas_monetarias:
+  ate_10k: [1000, 10000]
+  10k_50k: [10000, 50000]
+  50k_200k: [50000, 200000]
+  200k_1m: [200000, 1000000]
+  1m_7_5m: [1000000, 7500000]
+  acima_7_5m: [7500000, 15000000]
+
+# Peso de cada natureza na confiança da estimativa.
+fatores_natureza: { confirmado: 1.0, observado: 0.8, derivado: 0.7, estimado: 0.4 }
+arredondamento: 1000
+
+regras:
+  # --- contrato (§9.5) ---------------------------------------------------------------------
+  - id: EST-BASICA-01
+    cobertura: INCENDIO_RAIO_EXPLOSAO_FUMACA
+    tipo: basica
+    entradas: [objeto_seguro, valor_predio_faixa, valor_conteudo_faixa]
+    padrao: { valor_predio_faixa: 200k_1m, valor_conteudo_faixa: 50k_200k }
+    regra: "min/max = soma das faixas do que será protegido (prédio e/ou conteúdo); piso 100.000 (L-11); teto 7.500.000 (acima → ELG-008)"
+
+  - id: EST-DE-01
+    cobertura: DANOS_ELETRICOS
+    tipo: proporcional
+    entradas: [valor_equipamentos_faixa, valor_conteudo_faixa]
+    base: [{ fato: valor_equipamentos_faixa, fator: 1.0 }, { fato: valor_conteudo_faixa, fator: 0.3 }]
+    multiplicador: [0.1, 0.3]
+    padrao: [10000, 50000]
+    regra: "min = 10% e max = 30% do valor dos equipamentos (sem equipamentos: 30% do conteúdo) — calibrar"
+
+  - id: EST-ALUG-01
+    cobertura: PERDA_PAGAMENTO_ALUGUEL
+    tipo: proporcional
+    entradas: [aluguel_mensal_faixa, relacao_imovel]
+    base: [{ fato: aluguel_mensal_faixa, fator: 1.0 }]
+    multiplicador: [3, 6]
+    padrao: [15000, 60000]
+    regra: "aluguel mensal × 3 (min) a × 6 (max); sem aluguel informado → tabela da equipe (estimado)"
+
+  - id: EST-DF-01
+    cobertura: DESPESAS_FIXAS
+    tipo: proporcional
+    entradas: [despesas_fixas_mensais_faixa, faturamento_faixa]
+    # Faturamento é anual: × 1/12 para mensal × 20% (parcela setorial de despesas fixas, premissa).
+    base: [{ fato: despesas_fixas_mensais_faixa, fator: 1.0 }, { fato: faturamento_faixa, fator: 0.0167 }]
+    multiplicador: [3, 6]
+    padrao: [30000, 120000]
+    regra: "despesa mensal × 3 (min) a × 6 (max); sem despesa → faturamento mensal × 20% (estimado)"
+
+  - id: EST-RC-01
+    cobertura: RC_ESTABELECIMENTO
+    tipo: tabela
+    entradas: [atendimento_presencial]
+    fato: atendimento_presencial
+    linhas: { true: [100000, 300000], false: [50000, 100000] }
+    padrao: [50000, 200000]
+    regra: "faixa por exposição de público: atendimento presencial 100–300 mil; sem público 50–100 mil (L-07)"
+    # TODO: refinar por circulacao_clientes_dia_faixa quando a base definir as opções.
+
+  - id: EST-CYB-01
+    cobertura: PROTECAO_CIBERNETICA
+    tipo: fontes
+    entradas: [exposicao_digital_nivel, armazena_dados_clientes, recebe_pagamentos_online, sistema_critico_online]
+    fontes:
+      # 1º índice de exposição digital da base (derivado); 2º sinais informados na conversa.
+      - { fato: exposicao_digital_nivel, linhas: { baixo: [20000, 50000], medio: [50000, 100000], alto: [100000, 200000] } }
+      - fatos: [armazena_dados_clientes, recebe_pagamentos_online, sistema_critico_online]
+        linhas: [[20000, 50000], [50000, 100000], [100000, 200000], [150000, 300000]]
+    padrao: [20000, 100000]
+    regra: "faixa pelo nível de exposição digital (índice da base em tercis) ou, sem ele, pelo nº de sinais (dados de clientes, pagamento online, sistema crítico); controles não reduzem abaixo do mínimo (L-07, L-10)"
+
+  - id: EST-FRIG-01
+    cobertura: DETERIORACAO_MERCADORIAS_FRIGORIFICADAS
+    tipo: proporcional
+    entradas: [valor_estoque_faixa, mercadoria_refrigerada]
+    base: [{ fato: valor_estoque_faixa, fator: 1.0 }]
+    multiplicador: [0.3, 0.6]
+    padrao: [10000, 50000]
+    regra: "parcela refrigerada do estoque (premissa 30%–60%) × valor do estoque"
+
+  # --- premissas da equipe: padrão do plano ------------------------------------------------
+  - id: EST-VEND-01
+    cobertura: VENDAVAL_GRANIZO
+    tipo: proporcional
+    entradas: [valor_predio_faixa, valor_conteudo_faixa]
+    base: [{ fato: valor_predio_faixa, fator: 1.0 }, { fato: valor_conteudo_faixa, fator: 1.0 }]
+    multiplicador: [0.2, 0.5]
+    padrao: [50000, 200000]
+    regra: "20%–50% do valor do prédio (sem prédio: do conteúdo)"
+
+  - id: EST-ROUBO-01
+    cobertura: ROUBO_FURTO_BENS
+    tipo: proporcional
+    entradas: [valor_conteudo_faixa, valor_estoque_faixa]
+    base: [{ fato: valor_conteudo_faixa, fator: 1.0 }, { fato: valor_estoque_faixa, fator: 1.0 }]
+    multiplicador: [0.2, 0.5]
+    padrao: [20000, 100000]
+    regra: "20%–50% do valor do conteúdo (sem conteúdo: do estoque)"
+
+  - id: EST-VIDRO-01
+    cobertura: QUEBRA_VIDROS
+    tipo: fontes
+    entradas: [fachada_vidros, tipo_estabelecimento]
+    fontes:
+      # 1º fachada de vidro informada; 2º tipo de estabelecimento (lojas têm mais vidro exposto).
+      - { fato: fachada_vidros, linhas: { true: [20000, 60000], false: [5000, 20000] } }
+      - fato: tipo_estabelecimento
+        linhas: { loja: [10000, 40000], loja_shopping: [10000, 40000], escritorio: [5000, 20000], galpao_industria: [5000, 20000], home_office: [2000, 10000] }
+    padrao: [10000, 30000]
+    regra: "fachada de vidro 20–60 mil (sem fachada 5–20 mil); sem essa informação, pelo tipo de estabelecimento: loja 10–40 mil, escritório ou galpão 5–20 mil"
+
+  - id: EST-RCE-01
+    cobertura: RC_EMPREGADOR
+    tipo: tabela
+    entradas: [num_empregados_faixa]
+    fato: num_empregados_faixa
+    linhas: { "10_49": [100000, 300000], "50_mais": [300000, 1000000] }
+    padrao: [50000, 150000]
+    regra: "por número de empregados: 10–49 → 100–300 mil; 50+ → 300 mil–1 mi; demais 50–150 mil"
+
+  # --- premissas da equipe: específicas da atividade ---------------------------------------
+  - id: EST-HOME-01
+    cobertura: HOME_OFFICE
+    tipo: proporcional
+    entradas: [valor_equipamentos_faixa]
+    base: [{ fato: valor_equipamentos_faixa, fator: 1.0 }]
+    multiplicador: [0.5, 1.0]
+    padrao: [10000, 30000]
+    regra: "50%–100% do valor dos equipamentos em home office"
+
+  - id: EST-DELIV-01
+    cobertura: DELIVERY
+    tipo: tabela
+    entradas: [delivery]
+    fato: delivery
+    linhas: { true: [10000, 30000] }
+    padrao: [10000, 30000]
+    regra: "faixa fixa da equipe para bens em entrega"
+
+  - id: EST-VALOR-01
+    cobertura: ROUBO_FURTO_VALORES
+    tipo: tabela
+    entradas: [guarda_valores_no_local]
+    fato: guarda_valores_no_local
+    linhas: { true: [5000, 20000] }
+    padrao: [5000, 20000]
+    regra: "faixa fixa da equipe para valores em caixa"
+
+  # --- premissas da equipe: opcionais acionadas por fato -----------------------------------
+  - id: EST-LETR-01
+    cobertura: LETREIROS_ANUNCIOS_LUMINOSOS
+    tipo: tabela
+    entradas: [letreiro_luminoso]
+    fato: letreiro_luminoso
+    linhas: { true: [5000, 20000] }
+    padrao: [5000, 20000]
+    regra: "faixa fixa da equipe para letreiros"
+
+  - id: EST-ELET-01
+    cobertura: EQUIPAMENTOS_ELETRONICOS_SEM_ROUBO
+    tipo: proporcional
+    entradas: [valor_equipamentos_faixa]
+    base: [{ fato: valor_equipamentos_faixa, fator: 1.0 }]
+    multiplicador: [0.5, 1.0]
+    padrao: [10000, 50000]
+    regra: "50%–100% do valor dos equipamentos"
+
+  - id: EST-ARLIV-01
+    cobertura: BENS_MERCADORIAS_AO_AR_LIVRE
+    tipo: proporcional
+    entradas: [valor_estoque_faixa]
+    base: [{ fato: valor_estoque_faixa, fator: 1.0 }]
+    multiplicador: [0.1, 0.3]
+    padrao: [10000, 50000]
+    regra: "10%–30% do valor do estoque"
