@@ -8,7 +8,10 @@ from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
+    # anthropic: API da Anthropic (padrão); openrouter: API compatível com OpenAI do OpenRouter.
+    llm_provider: Literal["anthropic", "openrouter"] = "anthropic"
     anthropic_api_key: str = ""
+    openrouter_api_key: str = ""
     llm_model_main: str = "claude-opus-5-5"
     llm_model_fast: str = "claude-haiku-5-5"
 
